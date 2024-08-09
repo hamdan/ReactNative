@@ -11,24 +11,33 @@ export default function App() {
     setModalIsVisible(true);
   }
 
+  function endAddGoalHandler() {
+    setModalIsVisible(false);
+  }
+
   function addGoalHandler(enteredGoalText) {
     setCourseGoals((currentCourseGoals) => [
       ...currentCourseGoals,
       { text: enteredGoalText, id: Math.random().toString() },
     ]);
+    endAddGoalHandler();
   }
 
   function deleteGoalHandler(id) {
     setCourseGoals((currentCourseGoals) => {
       return currentCourseGoals.filter((goal) => goal.id !== id);
     });
-    console.log("Delete Item");
   }
+
   return (
     <View style={styles.appContainer}>
       <Button title="Add Modal" color="#5e0acc" onPress={startAddGoalHandler} />
       {modalIsVisible && (
-        <GoalInput visiable={modalIsVisible} onAddGoal={addGoalHandler} />
+        <GoalInput
+          visiable={modalIsVisible}
+          onAddGoal={addGoalHandler}
+          onCanel={endAddGoalHandler}
+        />
       )}
       <View style={styles.goalsContainer} r>
         <FlatList
